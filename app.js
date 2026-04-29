@@ -1,4 +1,5 @@
 const Fastify = require('fastify')
+const enums = require('./functions/enums')
 
 function init() {
   const fastify = Fastify({
@@ -58,23 +59,19 @@ function init() {
   // --- Enums ---
 
   fastify.get('/api/rarities', async function handler (request, reply) {
-    // TODO: Implement listRarities
-    return { data: [] }
+    return { data: enums.rarities }
   })
 
   fastify.get('/api/supertypes', async function handler (request, reply) {
-    // TODO: Implement listSupertypes
-    return { data: [] }
+    return { data: enums.supertypes }
   })
 
   fastify.get('/api/subtypes', async function handler (request, reply) {
-    // TODO: Implement listSubtypes
-    return { data: [] }
+    return { data: enums.subtypes }
   })
 
   fastify.get('/api/types', async function handler (request, reply) {
-    // TODO: Implement listTypes
-    return { data: [] }
+    return { data: enums.types }
   })
 
   return fastify

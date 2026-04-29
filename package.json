@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build:functions": "netlify-lambda build functions --config ./webpack.config.netlify.js",
+    "build:enums": "node scripts/build-enums.js",
+    "build:functions": "npm run build:enums && netlify-lambda build functions --config ./webpack.config.netlify.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
