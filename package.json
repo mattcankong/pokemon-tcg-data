@@ -17,6 +17,7 @@
   },
   "devDependencies": {
     "dotenv-safe": "^9.1.0",
+    "netlify-lambda": "^2.0.16",
     "webpack": "^5.106.2",
     "webpack-node-externals": "^3.0.0"
   }
