@@ -1,1 +1,2 @@
-export { handler } from '../lambda.js'
+const { handler } = require('../lambda.js')
+exports.handler = handler;

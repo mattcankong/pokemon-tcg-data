@@ -1,6 +1,7 @@
-import nodeExternals from 'webpack-node-externals'
-import dotenv from 'dotenv-safe'
-import webpack from 'webpack'
+const nodeExternals = require('webpack-node-externals');
+const dotenv = require('dotenv-safe');
+// Use the webpack version bundled with netlify-lambda (webpack 4) to avoid incompatibility
+const webpack = require('netlify-lambda/node_modules/webpack');
 
 const env = process.env.NODE_ENV || 'production';
 const dev = env === 'development';
@@ -9,7 +10,7 @@ if (dev) {
   dotenv.config({ allowEmptyValues: true });
 }
 
-export default {
+module.exports = {
   mode: env,
   devtool: dev ? 'eval-source-map' : 'none',
   externals: [nodeExternals()],

@@ -1,4 +1,4 @@
-import Fastify from 'fastify'
+const Fastify = require('fastify')
 
 function init() {
   const fastify = Fastify({
@@ -80,8 +80,6 @@ function init() {
   return fastify
 }
 
-const __filename = fileURLToPath(import.meta.url);
-
 if (process.argv[1] === __filename) {
   const port = 3000
   const host = '0.0.0.0'
@@ -91,4 +89,4 @@ if (process.argv[1] === __filename) {
   });
 }
 
-export default init;
+module.exports = init;
