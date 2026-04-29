@@ -9,7 +9,7 @@ if (dev) {
   dotenv.config({ allowEmptyValues: true });
 }
 
-module.exports = {
+const output = {
   mode: env,
   devtool: dev ? 'eval-source-map' : 'none',
   externals: [nodeExternals()],
@@ -31,4 +31,6 @@ module.exports = {
       'process.env.CONTEXT': env
     })
   ]
-};
+}
+
+export default output
