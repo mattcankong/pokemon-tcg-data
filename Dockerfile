@@ -5,7 +5,7 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm ci --only=production
 
-COPY . .
+COPY server.js server.js
 
 EXPOSE 3000
 
