@@ -9,7 +9,7 @@ if (dev) {
   dotenv.config({ allowEmptyValues: true });
 }
 
-module.exports = {
+export default {
   mode: env,
   devtool: dev ? 'eval-source-map' : 'none',
   externals: [nodeExternals()],
