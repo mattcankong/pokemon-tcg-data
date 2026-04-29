@@ -5,12 +5,19 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "build:functions": "netlify-lambda build functions --config ./webpack.config.netlify.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@fastify/aws-lambda": "^6.4.0",
     "fastify": "^5.8.5",
     "fastify-plugin": "^5.1.0"
+  },
+  "devDependencies": {
+    "dotenv-safe": "^9.1.0",
+    "webpack": "^5.106.2",
+    "webpack-node-externals": "^3.0.0"
   }
 }
