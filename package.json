@@ -1,0 +1,16 @@
+{
+  "name": "pokemon-tcg-data",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "fastify": "^5.8.5",
+    "fastify-plugin": "^5.1.0"
+  }
+}

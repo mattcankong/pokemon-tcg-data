@@ -1,0 +1,344 @@
+openapi: "3.0.3"
+info:
+  title: Pokemon TCG Data API
+  description: API for querying Pokemon Trading Card Game card and set data.
+  version: "1.0.0"
+
+servers:
+  - url: /api
+
+paths:
+  /cards/{id}:
+    get:
+      summary: Get a single card by ID
+      description: Find a single card by its unique ID.
+      operationId: getCardById
+      tags:
+        - Cards
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: A single card.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: "#/components/schemas/Card"
+        "404":
+          description: Card not found.
+
+  /rarities:
+    get:
+      summary: List rarities
+      description: List all available card rarities.
+      operationId: listRarities
+      tags:
+        - Rarities
+      responses:
+        "200":
+          description: A list of rarities.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: string
+
+  /supertypes:
+    get:
+      summary: List supertypes
+      description: List all available card supertypes.
+      operationId: listSupertypes
+      tags:
+        - Supertypes
+      responses:
+        "200":
+          description: A list of supertypes.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: string
+
+  /subtypes:
+    get:
+      summary: List subtypes
+      description: List all available card subtypes.
+      operationId: listSubtypes
+      tags:
+        - Subtypes
+      responses:
+        "200":
+          description: A list of subtypes.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: string
+
+  /types:
+    get:
+      summary: List types
+      description: List all available card types (energy types).
+      operationId: listTypes
+      tags:
+        - Types
+      responses:
+        "200":
+          description: A list of types.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: string
+
+  /sets:
+    get:
+      summary: List sets
+      description: List sets with filtering, sorting, and pagination.
+      operationId: listSets
+      tags:
+        - Sets
+      parameters:
+        - name: page
+          in: query
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            default: 1
+        - name: pageSize
+          in: query
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 20
+        - name: sort
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: order
+          in: query
+          required: false
+          schema:
+            type: string
+            enum: [asc, desc]
+            default: asc
+        - name: id
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: name
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        "200":
+          description: A paginated list of sets.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Set"
+                  totalCount:
+                    type: integer
+                  pageSize:
+                    type: integer
+                  page:
+                    type: integer
+
+  /sets/{id}:
+    get:
+      summary: Get a single set by ID
+      description: Find a single set by its unique ID.
+      operationId: getSetById
+      tags:
+        - Sets
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: A single set.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: "#/components/schemas/Set"
+        "404":
+          description: Set not found.
+
+  /cards:
+    get:
+      summary: List cards
+      description: List cards with filtering, sorting, and pagination.
+      operationId: listCards
+      tags:
+        - Cards
+      parameters:
+        - name: page
+          in: query
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            default: 1
+        - name: pageSize
+          in: query
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 20
+        - name: sort
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: order
+          in: query
+          required: false
+          schema:
+            type: string
+            enum: [asc, desc]
+            default: asc
+        - name: name
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: setId
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: type
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: subtype
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: supertype
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: rarity
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        "200":
+          description: A paginated list of cards.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Card"
+                  totalCount:
+                    type: integer
+                  pageSize:
+                    type: integer
+                  page:
+                    type: integer
+
+components:
+  schemas:
+    Set:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        series:
+          type: string
+        printedTotal:
+          type: integer
+        total:
+          type: integer
+        releaseDate:
+          type: string
+          format: date
+        updatedAt:
+          type: string
+          format: date-time
+        images:
+          type: object
+          properties:
+            symbol:
+              type: string
+            logo:
+              type: string
+      required:
+        - id
+        - name
+
+    Card:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        setId:
+          type: string
+        number:
+          type: string
+        type:
+          type: string
+        subtype:
+          type: string
+        supertype:
+          type: string
+        rarity:
+          type: string
+      required:
+        - id
+        - name
