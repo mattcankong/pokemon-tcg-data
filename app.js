@@ -1,6 +1,8 @@
 const Fastify = require('fastify')
 const cors = require('@fastify/cors')
 const enums = require('./functions/enums')
+const fs = require('fs')
+const path = require('path')
 
 function init() {
   const fastify = Fastify({
@@ -24,14 +26,43 @@ function init() {
     }
   })
 
+  // Base directory for card data files — used to prevent path traversal
+  const CARD_DATA_DIR = path.resolve(__dirname, 'data', 'cards', 'en')
+
   fastify.get('/api/cards/:id', async function handler (request, reply) {
-    // TODO: Implement getCardById
     const { id } = request.params
-    const card = null // find card by id
+
+    // Parse composite id: <setid>-<cardnumber> (e.g., "base1-1")
+    const lastDash = id.lastIndexOf('-')
+    if (lastDash === -1) {
+      reply.code(400).send({ error: 'Invalid card ID format. Expected <setid>-<cardnumber>.' })
+      return
+    }
+
+    const setId = id.substring(0, lastDash)
+    const cardFile = path.resolve(CARD_DATA_DIR, `${setId}.json`)
+
+    // Guard against path traversal — resolved path must stay inside CARD_DATA_DIR
+    if (!cardFile.startsWith(CARD_DATA_DIR + path.sep)) {
+      reply.code(400).send({ error: 'Invalid card ID.' })
+      return
+    }
+
+    let cards
+    try {
+      const fileContent = fs.readFileSync(cardFile, 'utf8')
+      cards = JSON.parse(fileContent)
+    } catch (err) {
+      reply.code(404).send({ error: 'Card not found' })
+      return
+    }
+
+    const card = cards.find(c => c.id === id)
     if (!card) {
       reply.code(404).send({ error: 'Card not found' })
       return
     }
+
     return { data: card }
   })
 
