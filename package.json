@@ -12,6 +12,7 @@
   "license": "ISC",
   "dependencies": {
     "@fastify/aws-lambda": "^6.4.0",
+    "@fastify/cors": "^11.2.0",
     "fastify": "^5.8.5",
     "fastify-plugin": "^5.1.0"
   },

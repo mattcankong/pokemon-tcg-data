@@ -1,10 +1,13 @@
 const Fastify = require('fastify')
+const cors = require('@fastify/cors')
 const enums = require('./functions/enums')
 
 function init() {
   const fastify = Fastify({
     logger: true
   })
+
+  fastify.register(cors)
 
   fastify.get('/', async function handler (request, reply) {
     return { hello: 'world' }

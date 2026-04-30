@@ -2,10 +2,16 @@ openapi: "3.0.3"
 info:
   title: Pokemon TCG Data API
   description: API for querying Pokemon Trading Card Game card and set data.
-  version: "1.0.0"
+  version: "1.0.1"
 
 servers:
-  - url: /api
+  - url: http://localhost:3000/api
+    description: Local development server
+  - url: https://1d29d7abc7.us.serverless.gateways.konggateway.tech
+    description: Production proxy (requires X-API-KEY)
+
+security:
+  - ApiKeyAuth: []
 
 paths:
   /cards/{id}:
@@ -289,6 +295,12 @@ paths:
                     type: integer
 
 components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-KEY
+      description: API key for authenticating with the production proxy
   schemas:
     Set:
       type: object
